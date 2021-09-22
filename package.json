@@ -1,0 +1,21 @@
+{
+  "name": "eat-better-kac",
+  "version": "0.0.1",
+  "description": "Project to study about Prima with Typescript base api and PostgreSQL",
+  "main": "src/main.ts",
+  "scripts": {
+    "start": "ts-node src/main.ts"
+  },
+  "repository": "git@github.com:fej0se/eat-better-kac.git",
+  "author": "Felipe José <felipej0se@icloud.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@marblejs/core": "^3.5.1",
+    "@marblejs/middleware-body": "^3.5.1",
+    "@marblejs/middleware-logger": "^3.5.1",
+    "fp-ts": "^2.11.3",
+    "rxjs": "^7.3.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
