@@ -1,10 +1,11 @@
 import { createServer } from "@marblejs/core";
 import { IO } from "fp-ts/lib/IO";
-import { listener } from "./listener.http";
+import { listener } from "@app";
+import { Config } from "@config";
 
 const server = createServer({
-  port: 3000,
-  hostname: "127.0.0.1",
+  port: Config.server.port,
+  hostname: Config.server.host,
   listener,
 });
 
