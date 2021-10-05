@@ -11,8 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "@marblejs/core": "^3.5.1",
+    "@marblejs/http": "^4.0.0-next.17",
     "@marblejs/middleware-body": "^3.5.1",
     "@marblejs/middleware-io": "^3.5.1",
+    "@marblejs/middleware-jwt": "^3.5.1",
     "@marblejs/middleware-logger": "^3.5.1",
     "@prisma/client": "3.1.1",
     "@types/node": "^16.9.6",
