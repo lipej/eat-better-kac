@@ -18,6 +18,7 @@
     "@marblejs/middleware-logger": "^3.5.1",
     "@prisma/client": "3.1.1",
     "@types/node": "^16.9.6",
+    "dotenv": "^10.0.0",
     "fp-ts": "^2.11.3",
     "prisma": "3.1.1",
     "rxjs": "^7.3.0",

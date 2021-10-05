@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 export enum NodeEnv {
   PRODUCTION = "production",
   DEVELOPMENT = "development",
@@ -11,6 +13,7 @@ interface IConfig {
   };
   jwt: {
     secret: string;
+    expires: number;
   };
 }
 
@@ -22,5 +25,6 @@ export const Config: IConfig = {
   },
   jwt: {
     secret: process.env.JWT_SECRET || "secret_test",
+    expires: Number(process.env.JWT_EXPIRATION) || 4,
   },
 };

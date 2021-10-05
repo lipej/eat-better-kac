@@ -1,3 +1,4 @@
+import { Config } from "@config";
 import { generateExpirationInHours } from "@marblejs/middleware-jwt";
 import { User } from "@prisma/client";
 
@@ -6,6 +7,6 @@ export const generateTokenPayload = (user: User | null) => {
   return {
     id: user.id,
     email: user.email,
-    exp: generateExpirationInHours(4),
+    exp: generateExpirationInHours(Config.jwt.expires),
   };
 };
