@@ -1,10 +1,13 @@
 import { prisma } from "@prisma-main";
 import { from } from "rxjs";
+import * as bcrypt from "bcryptjs";
 
 export interface LoginCredentials {
   login: string;
   password: string;
 }
+
+export const NOT_FOUND_USER = "User not found";
 
 export default {
   validate(id: number) {
@@ -16,7 +19,7 @@ export default {
           },
         })
         .then((user) => {
-          if (!user) throw new Error();
+          if (!user) throw new Error(NOT_FOUND_USER);
 
           return user;
         })
@@ -31,7 +34,12 @@ export default {
             email: credentials.login,
           },
         })
-        .then((user) => (user?.password === credentials.password ? user : null))
+        .then((user) => {
+          if (user && bcrypt.compareSync(credentials.password, user.password))
+            return user;
+
+          throw new Error(NOT_FOUND_USER);
+        })
     );
   },
 };
