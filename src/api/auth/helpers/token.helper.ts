@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 export const generateTokenPayload = (user: User) => {
   return {
     id: user.id,
-    email: user.email,
+    role: user.role,
     exp: generateExpirationInHours(Config.jwt.expires),
   };
 };
