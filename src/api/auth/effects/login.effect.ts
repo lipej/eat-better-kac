@@ -1,10 +1,12 @@
 import { r, HttpError, HttpStatus } from "@marblejs/http";
 import { throwError } from "rxjs";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { generateTokenPayload } from "@api/auth/helpers/token.helper";
 import { generateToken } from "@marblejs/middleware-jwt";
+
 import { Config } from "@config";
-import User, { LoginCredentials } from "@api/users/prisma";
+import { generateTokenPayload } from "@api/auth/helpers/token.helper";
+import User from "@api/users/prisma";
+import { LoginCredentials } from "@api/common/interfaces";
 
 export const login$ = r.pipe(
   r.matchPath("/auth"),
