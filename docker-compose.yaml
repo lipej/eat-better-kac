@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    container_name: eatbetter
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    volumes:
+      - .:/home/node/app
+    network_mode: bridge
