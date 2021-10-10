@@ -1,18 +1,14 @@
-import { authorize$ as jwt$ } from "@marblejs/middleware-jwt";
-import { Config } from "@config";
-import { catchError, mergeMap, map, of, throwError } from "rxjs";
-import { HttpError, HttpStatus } from "@marblejs/core";
-import User from "@api/users/prisma";
+import { authorize$ as jwt$ } from '@marblejs-contrib/middleware-jwt'
+import { Config } from '@config'
+import { of, map, mergeMap } from 'rxjs'
+import { Users } from '@users'
 
-const config = { secret: Config.jwt.secret };
+const config = { secret: Config.jwt.secret }
 
 const verifyPayload$ = (payload: { id: string }) =>
   of(payload).pipe(
     map((payload) => parseInt(payload.id)),
-    mergeMap(User.validate),
-    catchError(() =>
-      throwError(() => new HttpError("Unauthorized", HttpStatus.UNAUTHORIZED))
-    )
-  );
+    mergeMap(Users.validate)
+  )
 
-export const authorize$ = jwt$(config, verifyPayload$);
+export const authorize$ = jwt$(config, verifyPayload$)

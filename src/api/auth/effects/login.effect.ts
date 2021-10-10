@@ -1,26 +1,23 @@
-import { r, HttpError, HttpStatus } from "@marblejs/http";
-import { throwError } from "rxjs";
-import { catchError, map, mergeMap } from "rxjs/operators";
-import { generateToken } from "@marblejs/middleware-jwt";
+import { r, HttpError, HttpStatus } from '@marblejs/http'
+import { throwError, catchError, map, mergeMap } from 'rxjs'
+import { generateToken } from '@marblejs-contrib/middleware-jwt'
 
-import { Config } from "@config";
-import { generateTokenPayload } from "@api/auth/helpers/token.helper";
-import User from "@api/users/prisma";
-import { LoginCredentials } from "@api/common/interfaces";
+import { Config } from '@config'
+import { generateTokenPayload } from '@auth'
+import { Users } from '@users'
+import { LoginCredentials } from '@common'
 
 export const login$ = r.pipe(
-  r.matchPath("/auth"),
-  r.matchType("POST"),
+  r.matchPath('/auth'),
+  r.matchType('POST'),
   r.useEffect((req$) =>
     req$.pipe(
       map((req) => req.body as LoginCredentials),
-      mergeMap(User.findByCredentials),
+      mergeMap(Users.findByCredentials),
       map(generateTokenPayload),
       map(generateToken({ secret: Config.jwt.secret })),
       map((token) => ({ body: { token } })),
-      catchError(() =>
-        throwError(() => new HttpError("Unauthorized", HttpStatus.UNAUTHORIZED))
-      )
+      catchError(() => throwError(() => new HttpError('Unauthorized', HttpStatus.UNAUTHORIZED)))
     )
   )
-);
+)
