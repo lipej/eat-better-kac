@@ -8,3 +8,10 @@ export interface UserCreation {
   password: string
   name: string
 }
+
+export interface RecipeCreation {
+  title: string
+  ingredients: string
+  preparation: string
+  time: string
+}

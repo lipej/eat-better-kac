@@ -24,6 +24,7 @@
       "@health": ["api/health"],
       "@common": ["api/common"],
       "@users": ["api/users"],
+      "@recipes": ["api/recipes"],
       "@config": ["config"],
       "@tests": ["tests"],
       "@utils": ["utils"],
