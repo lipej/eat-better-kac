@@ -28,5 +28,5 @@
       "@prisma-main": ["../prisma"]
     }
   },
-  "include": ["./node_modules/@types", "./src/**/*.ts"]
+  "include": ["./node_modules/@types", "./src/**/*.ts", "test.setup.ts"]
 }
