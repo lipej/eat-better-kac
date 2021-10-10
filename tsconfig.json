@@ -20,8 +20,10 @@
     "typeRoots": ["./node_modules/@types"],
     "paths": {
       "@app": ["./app"],
-      "@api/*": ["api/*"],
-      "@api-health": ["api/index"],
+      "@auth": ["api/auth"],
+      "@health": ["api/health"],
+      "@common": ["api/common"],
+      "@users": ["api/users"],
       "@config": ["config"],
       "@tests": ["tests"],
       "@utils": ["utils"],
