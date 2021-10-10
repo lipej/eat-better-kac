@@ -1,16 +1,16 @@
-import { httpListener } from "@marblejs/core";
-import { logger$ } from "@marblejs/middleware-logger";
-import { bodyParser$ } from "@marblejs/middleware-body";
+import { httpListener } from '@marblejs/http'
+import { logger$ } from '@marblejs/middleware-logger'
+import { bodyParser$ } from '@marblejs/middleware-body'
 
-import health$ from "@api-health";
-import { login$ } from "@api/auth/effects/login.effect";
-import { users$ } from "@api/users/effects/user.effect";
+import { health$ } from '@health'
+import { login$ } from '@auth'
+import { users$ } from '@users'
 
-const middlewares = [logger$(), bodyParser$()];
+const middlewares = [logger$(), bodyParser$()]
 
-const effects = [health$, login$, users$];
+const effects = [health$, login$, users$]
 
 export const listener = httpListener({
   middlewares,
-  effects,
-});
+  effects
+})
