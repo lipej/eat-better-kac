@@ -1,0 +1,13 @@
+{
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "printWidth": 100,
+  "useTabs": false,
+  "tabWidth": 2,
+  "importOrder": ["^[./]"],
+  "importOrderSeparation": true
+}
