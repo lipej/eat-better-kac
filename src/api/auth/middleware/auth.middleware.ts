@@ -1,6 +1,7 @@
 import { authorize$ as jwt$ } from '@marblejs-contrib/middleware-jwt'
-import { Config } from '@config'
 import { of, map, mergeMap } from 'rxjs'
+
+import { Config } from '@config'
 import { Users } from '@users'
 
 const config = { secret: Config.jwt.secret }

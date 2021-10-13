@@ -1,9 +1,11 @@
 import { r, HttpError, HttpStatus, combineRoutes } from '@marblejs/http'
+import { User } from '@prisma/client'
 import { throwError, catchError, map, mergeMap } from 'rxjs'
 
-import { Users } from '@users'
 import { getIdFromToken, authorize$ } from '@auth'
-import { UserCreation } from '@common'
+import { Users } from '@users'
+
+export type UserCreation = Omit<User, 'id' | 'role'>
 
 const create$ = r.pipe(
   r.matchPath('/'),

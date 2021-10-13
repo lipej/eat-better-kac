@@ -1,5 +1,6 @@
 import { pipe } from 'fp-ts/lib/function'
-import { useTestBedSetup } from '../../../../test.setup'
+
+import { useTestBedSetup } from '@tests'
 
 describe('users$', () => {
   const testBedSetup = useTestBedSetup()

@@ -1,7 +1,8 @@
 import { prisma } from '@prisma-main'
 import { pipe } from 'fp-ts/lib/function'
-import { useTestBedSetup } from '../../../../test.setup'
 import * as bcrypt from 'bcryptjs'
+
+import { useTestBedSetup } from '@tests'
 
 describe('login$', () => {
   const testBedSetup = useTestBedSetup()

@@ -3,7 +3,9 @@ import { Recipe } from '@prisma/client'
 import { from, map, Observable } from 'rxjs'
 import { HttpError } from '@marblejs/http'
 
-interface IQuery {
+import { mountSearch } from '@recipes'
+
+type IQuery = {
   page: number
   limit: number
   search: string
@@ -29,23 +31,9 @@ export const Recipes = {
   },
 
   showMany(query: IQuery) {
-    const mountSearch = (search: string) => {
-      const contains: string[] = []
-      const notContains: string[] = []
-
-      search.split(',').forEach((value) => {
-        if (value[0] === '!') notContains.push(value.replace('!', ''))
-        else contains.push(value)
-      })
-
-      return `${contains.map((value) => `'${value}'`).join(' | ')} & (${notContains
-        .map((value) => `!'${value}'`)
-        .join(' & ')})`
-    }
-
     const search = mountSearch(query.search)
 
-    const results = from(
+    return from(
       prisma.recipe.findMany({
         where: {
           title: { search },
@@ -56,18 +44,25 @@ export const Recipes = {
         take: query.limit,
         skip: query.limit * query.page
       })
+    ).pipe(
+      map((result) => ({
+        result,
+        limit: query.limit,
+        page: query.page === 0 ? 1 : query.page - 1
+      }))
     )
-
-    return {
-      results,
-      limit: query.limit,
-      page: query.page === 0 ? 1 : query.page - 1
-    }
   },
 
   remove(id: number) {
     return from(prisma.recipe.update({ where: { id }, data: { deletedAt: new Date() } }))
+  },
+
+  update(data: { id: number; fields: Omit<IRecipeData, 'authorId'> & { published: boolean } }) {
+    return from(
+      prisma.recipe.update({
+        where: { id: data.id },
+        data: { ...data.fields, updatedAt: new Date() }
+      })
+    )
   }
 }
-
-//map((id) =>

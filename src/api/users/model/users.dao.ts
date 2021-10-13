@@ -1,9 +1,10 @@
 import { prisma } from '@prisma-main'
-import { from, Observable } from 'rxjs'
-import * as bcrypt from 'bcryptjs'
-import { LoginCredentials, UserCreation } from '@common'
 import { User } from '@prisma/client'
-import { map } from 'rxjs/operators'
+import { from, Observable, map } from 'rxjs'
+import * as bcrypt from 'bcryptjs'
+
+import { LoginCredentials } from '@auth'
+import { UserCreation } from '@users'
 
 export const NOT_FOUND_USER = 'User not found'
 
@@ -28,7 +29,7 @@ export const Users = {
     return from(
       prisma.user.findUnique({
         where: {
-          email: credentials.login
+          email: credentials.email
         }
       })
     ).pipe(
