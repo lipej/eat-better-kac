@@ -1,17 +1,17 @@
-import { httpListener } from '@marblejs/http'
+import { combineRoutes, httpListener } from '@marblejs/http'
 import { logger$ } from '@marblejs/middleware-logger'
 import { bodyParser$ } from '@marblejs/middleware-body'
 
-import { health$ } from '@health'
 import { login$ } from '@auth'
 import { users$ } from '@users'
+import { health$ } from '@health'
 import { recipes$ } from '@recipes'
 
 const middlewares = [logger$(), bodyParser$()]
 
-const effects = [health$, login$, users$, recipes$]
+const routes = combineRoutes('/api', [health$, login$, users$, recipes$])
 
 export const listener = httpListener({
   middlewares,
-  effects
+  effects: [routes]
 })
