@@ -21,7 +21,7 @@ describe('login$', () => {
 
     const response = await pipe(
       request('POST'),
-      request.withPath('/auth'),
+      request.withPath('/api/auth'),
       request.withBody({ login: 'teste1@teste.com', password: '123456' }),
       request.send
     )
@@ -37,7 +37,7 @@ describe('login$', () => {
 
     const response = await pipe(
       request('POST'),
-      request.withPath('/auth'),
+      request.withPath('/api/auth'),
       request.withBody({ login: 'teste2@teste.com', password: '123456' }),
       request.send
     )

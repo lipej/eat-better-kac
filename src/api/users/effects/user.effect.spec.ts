@@ -14,7 +14,7 @@ describe('users$', () => {
 
     const response = await pipe(
       request('POST'),
-      request.withPath('/users'),
+      request.withPath('/api/users'),
       request.withBody({ name: 'test', password: 'test', email: 'test@example.com' }),
       request.send
     )
@@ -31,7 +31,7 @@ describe('users$', () => {
 
     const response = await pipe(
       request('POST'),
-      request.withPath('/users'),
+      request.withPath('/api/users'),
       request.withBody({ name: 'test', password: 'test', email: 'test@example.com' }),
       request.send
     )
@@ -43,7 +43,7 @@ describe('users$', () => {
   it('should get error when try to delete without token', async () => {
     const { request } = await testBedSetup.useTestBed()
 
-    const response = await pipe(request('DELETE'), request.withPath('/users'), request.send)
+    const response = await pipe(request('DELETE'), request.withPath('/api/users'), request.send)
 
     expect(response.statusCode).toBe(401)
     expect(response.body.error.message).toBe(`Unauthorized`)
@@ -54,7 +54,7 @@ describe('users$', () => {
 
     const response = await pipe(
       request('DELETE'),
-      request.withPath('/users'),
+      request.withPath('/api/users'),
       request.withHeaders({
         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTAsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjMzODU0Njc4LCJpYXQiOjE2MzM4NDAyNzh9.Bw_lDmqwvSVcOO1C59KevKFD5nCeN4kPk1btwfbpvLg`
       }),
@@ -70,14 +70,14 @@ describe('users$', () => {
 
     const token = await pipe(
       request('POST'),
-      request.withPath('/auth'),
+      request.withPath('/api/auth'),
       request.withBody({ login: 'test@example.com', password: 'test' }),
       request.send
     ).then((response) => response.body.token)
 
     const response = await pipe(
       request('DELETE'),
-      request.withPath('/users'),
+      request.withPath('/api/users'),
       request.withHeaders({ Authorization: `Bearer ${token}` }),
       request.send
     )
