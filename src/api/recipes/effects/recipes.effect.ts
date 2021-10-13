@@ -2,10 +2,10 @@ import { r, HttpError, HttpStatus, combineRoutes } from '@marblejs/http'
 import { throwError, catchError, map, mergeMap } from 'rxjs'
 
 import { Recipes } from '@recipes'
-import { authorize$ } from '@auth'
-import { mountData } from '../utils/mount-data.util'
-import { RecipeCreation } from '@common'
-import { Params } from 'api/common/interfaces/params.interface'
+import { authorize$, getIdFromToken } from '@auth'
+import { Recipe } from '@prisma/client'
+
+type RecipeCreation = Pick<Recipe, 'title' | 'ingredients' | 'preparation' | 'time'>
 
 const create$ = r.pipe(
   r.matchPath('/'),
@@ -13,12 +13,10 @@ const create$ = r.pipe(
   r.use(authorize$),
   r.useEffect((req$) =>
     req$.pipe(
-      map((req) =>
-        mountData({
-          body: req.body as RecipeCreation,
-          token: req.headers.authorization as string
-        })
-      ),
+      map((req) => ({
+        ...(req.body as RecipeCreation),
+        authorId: getIdFromToken(req.headers.authorization)
+      })),
       mergeMap(Recipes.create),
       map((recipe) => ({
         body: {
@@ -40,8 +38,8 @@ const delete$ = r.pipe(
   r.use(authorize$),
   r.useEffect((req$) =>
     req$.pipe(
-      map((req) => req.params as Params),
-      map((params) => parseInt(params.id)),
+      map((req) => req.params as any),
+      map((params) => params.id),
       mergeMap(Recipes.show),
       map((recipe) => recipe.id),
       mergeMap(Recipes.remove),

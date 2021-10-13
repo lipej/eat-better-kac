@@ -5,7 +5,9 @@ import { generateToken } from '@marblejs-contrib/middleware-jwt'
 import { Config } from '@config'
 import { generateTokenPayload } from '@auth'
 import { Users } from '@users'
-import { LoginCredentials } from '@common'
+import { User } from '@prisma/client'
+
+type LoginCredentials = Pick<User, 'email' | 'password'>
 
 export const login$ = r.pipe(
   r.matchPath('/auth'),

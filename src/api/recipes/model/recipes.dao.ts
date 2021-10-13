@@ -1,6 +1,5 @@
 import { prisma } from '@prisma-main'
 import { Recipe } from '@prisma/client'
-import { IRecipeData } from '@common'
 import { from, map, Observable } from 'rxjs'
 import { HttpError } from '@marblejs/http'
 
@@ -9,6 +8,8 @@ interface IQuery {
   limit: number
   search: string
 }
+
+type IRecipeData = Omit<Recipe, 'id' | 'published' | 'createdAt' | 'updatedAt' | 'deletedAt'>
 
 export const Recipes = {
   create(recipe: IRecipeData): Observable<Recipe> {
