@@ -27,6 +27,7 @@ describe('recipes$', () => {
         }
       ]
     })
+
   })
 
   it('should create a recipe sucessfully', async () => {
@@ -195,17 +196,31 @@ describe('recipes$', () => {
       request.send
     )
 
-    const response = await pipe(
+    const create = await pipe(
+      request('POST'),
+      request.withPath('/api/recipes'),
+      request.withHeaders({ Authorization: `Bearer ${token}` }),
+      request.withBody({
+        title: 'test recipe 1',
+        ingredients: { code: '100g' },
+        preparation: 'mix all together, put in the oven',
+        time: '100m'
+      }),
+      request.send
+    )
+
+    const update = await pipe(
       request('PATCH'),
-      request.withPath('/api/recipes/1'),
+      request.withPath(`/api/recipes/${create.body.data.id}`),
       request.withHeaders({ Authorization: `Bearer ${token}` }),
       request.withBody({ title: 'new recipe test name' }),
       request.send
     )
 
-    expect(response.statusCode).toBe(200)
-    expect(response.body.data.published).toBe(false)
-    expect(response.body.data.title).toBe('new recipe test name')
+    expect(update.statusCode).toBe(200)
+    expect(create.body.data.title).toBe('test recipe 1')
+    expect(update.body.data.title).toBe('new recipe test name')
+    expect(update.body.data.published).toBe(false)
   })
 
   it('should delete a recipe sucessfully', async () => {
@@ -271,8 +286,6 @@ describe('recipes$', () => {
   })
 
   it('should search a recipe sucessfully', async () => {
-    const { request } = await testBedSetup.useTestBed()
-
     await prisma.recipe.createMany({
       data: [
         {
@@ -286,7 +299,7 @@ describe('recipes$', () => {
           preparation: 'combine all together, bake',
           time: '120m',
           published: true,
-          authorId: 5
+          authorId: 1
         },
         {
           title: 'Vegan Banana Yogurt Cake',
@@ -299,7 +312,7 @@ describe('recipes$', () => {
           preparation: 'combine all together, bake',
           time: '130m',
           published: true,
-          authorId: 5
+          authorId: 1
         },
         {
           title: 'Apple Yogurt Cake',
@@ -312,10 +325,11 @@ describe('recipes$', () => {
           preparation: 'combine all together, bake',
           time: '120m',
           published: false,
-          authorId: 5
+          authorId: 1
         }
-      ]
-    })
+      ]})
+      
+    const { request } = await testBedSetup.useTestBed()
 
     const response = await pipe(
       request('GET'),
