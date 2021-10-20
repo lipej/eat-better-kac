@@ -28,10 +28,10 @@ jobs:
         run: yarn install
 
       - name: run prisma migrate
-        run: dotenv -e .env.test npx prisma migrate dev --name init
+        run: npx dotenv -e .env.test npx prisma migrate dev --name init
 
       - name: Collect coverage
-        run: dotenv -e .env.test jest --coverage > OUT; sed -n 6,8p OUT > .github/workflows/COVERAGE_REPORT
+        run: npx dotenv -e .env.test jest --coverage > OUT; sed -n 6,8p OUT > .github/workflows/COVERAGE_REPORT
 
       - uses: harupy/comment-on-pr@master
         env:
