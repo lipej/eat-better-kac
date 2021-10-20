@@ -27,8 +27,15 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Run prisma migrate
+        run: yarn prisma:init
+        env: 
+          DATABASE_URL: postgresql://tests:tests@localhost:5432/tests
+
       - name: Collect coverage
         run: yarn test > OUT; sed -n 6,8p OUT > .github/workflows/COVERAGE_REPORT
+        env: 
+          DATABASE_URL: postgresql://tests:tests@localhost:5432/tests
 
       - uses: harupy/comment-on-pr@master
         env:
