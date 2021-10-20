@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist/",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+    "strict": true,
+    "target": "es2017",
+    "lib": ["dom", "es2017"],
+    "typeRoots": ["./node_modules/@types"],
+    "paths": {
+      "@app": ["./app"],
+      "@auth": ["api/auth"],
+      "@health": ["api/health"],
+      "@common": ["api/common"],
+      "@users": ["api/users"],
+      "@recipes": ["api/recipes"],
+      "@config": ["config"],
+      "@tests": ["../test.setup.ts"],
+      "@utils": ["utils"],
+      "@prisma-main": ["../prisma"]
+    }
+  },
+  "include": ["./node_modules/@types", "./src/**/*.ts", "test.setup.ts"]
+}

@@ -1,0 +1,44 @@
+name: Unit Tests (Coverage)
+
+on: pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      db_test:
+        image: postgres
+        env:
+          POSTGRES_USER: tests
+          POSTGRES_PASSWORD: tests
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.0
+        with:
+          node-version: "14.x"
+
+      - name: Install yarn
+        run: npm i -g yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run prisma migrate
+        run: yarn prisma:init
+        env: 
+          DATABASE_URL: postgresql://tests:tests@localhost:5432/tests
+
+      - name: Collect coverage
+        run: yarn test > OUT; sed -n 6,40p OUT > .github/workflows/COVERAGE_REPORT
+        env: 
+          DATABASE_URL: postgresql://tests:tests@localhost:5432/tests
+
+      - uses: harupy/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: COVERAGE_REPORT

@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+model Recipe {
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(140)
+  ingredients String   
+  preparation String     
+  time        String     @db.VarChar(6)
+  published   Boolean    @default(false)
+  author      User       @relation(fields: [authorId], references: [id])
+  authorId    Int
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?
+  deletedAt   DateTime?
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  name     String
+  role     Role     @default(USER)
+  recipies Recipe[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
