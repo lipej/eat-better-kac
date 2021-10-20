@@ -31,9 +31,7 @@ jobs:
         run: npx dotenv -e .env.test npx prisma migrate dev --name init
 
       - name: Collect coverage
-        run: npx dotenv -e .env.test jest --ci --runInBand --no-cache --coverage --outputFile test-results.json --json
-        env:
-          CI: true
+        run: npx dotenv -e .env.test npx jest --coverage
   
       - name: Danger CI
         run: yarn danger ci
