@@ -9,18 +9,12 @@ import { UserCreation } from '@users'
 export const NOT_FOUND_USER = 'User not found'
 
 export const Users = {
-  validate(id: number): Observable<User> {
+  validate(id: number): Observable<User | null> {
     return from(
       prisma.user.findUnique({
         where: {
           id
         }
-      })
-    ).pipe(
-      map((user) => {
-        if (!user) throw new Error(NOT_FOUND_USER)
-
-        return user
       })
     )
   },
@@ -46,9 +40,5 @@ export const Users = {
         data: { ...user, password: bcrypt.hashSync(user.password) }
       })
     )
-  },
-
-  delete(id: number): Observable<Boolean> {
-    return from(prisma.user.delete({ where: { id } }).then(() => true))
   }
 }
