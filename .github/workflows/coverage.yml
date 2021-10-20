@@ -9,7 +9,7 @@ jobs:
     services:
       db_test:
         image: postgres
-        environment:
+        env:
           POSTGRES_USER: tests
           POSTGRES_PASSWORD: tests
         ports:
