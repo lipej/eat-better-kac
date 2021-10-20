@@ -31,10 +31,11 @@ jobs:
         run: npx dotenv -e .env.test npx prisma migrate dev --name init
 
       - name: Collect coverage
-        run: npx dotenv -e .env.test jest --coverage > OUT; sed -n 6,8p OUT > .github/workflows/COVERAGE_REPORT
-
-      - uses: harupy/comment-on-pr@master
+        run: npx dotenv -e .env.test jest --ci --runInBand --no-cache --coverage --outputFile test-results.json --json
+        env:
+          CI: true
+  
+      - name: Danger CI
+        run: yarn danger ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          filename: COVERAGE_REPORT
