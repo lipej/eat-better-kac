@@ -1,0 +1,37 @@
+name: Unit Tests (Coverage)
+
+on: pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      db_test:
+        image: postgres
+        environment:
+          POSTGRES_USER: tests
+          POSTGRES_PASSWORD: tests
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.0
+        with:
+          node-version: "14.x"
+
+      - name: Install yarn
+        run: npm i -g yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Collect coverage
+        run: yarn test > OUT; sed -n 6,8p OUT > .github/workflows/COVERAGE_REPORT
+
+      - uses: harupy/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: COVERAGE_REPORT
