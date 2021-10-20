@@ -10,8 +10,8 @@ describe('login$', () => {
   beforeAll(async () => {
     await prisma.user.createMany({
       data: [
-        { name: 'user1', email: 'teste1@teste.com', password: bcrypt.hashSync('123456') },
-        { name: 'user2', email: 'teste2@teste.com', password: bcrypt.hashSync('123457') }
+        { name: 'user1', email: 'test1@test.com', password: bcrypt.hashSync('123456') },
+        { name: 'user2', email: 'test2@test.com', password: bcrypt.hashSync('123457') }
       ]
     })
   })
@@ -22,7 +22,7 @@ describe('login$', () => {
     const response = await pipe(
       request('POST'),
       request.withPath('/api/auth'),
-      request.withBody({ login: 'teste1@teste.com', password: '123456' }),
+      request.withBody({ email: 'test1@test.com', password: '123456' }),
       request.send
     )
 
@@ -38,7 +38,7 @@ describe('login$', () => {
     const response = await pipe(
       request('POST'),
       request.withPath('/api/auth'),
-      request.withBody({ login: 'teste2@teste.com', password: '123456' }),
+      request.withBody({ email: 'test2@test.com', password: '123456' }),
       request.send
     )
 
