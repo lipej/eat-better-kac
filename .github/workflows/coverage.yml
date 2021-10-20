@@ -33,7 +33,7 @@ jobs:
           DATABASE_URL: postgresql://tests:tests@localhost:5432/tests
 
       - name: Collect coverage
-        run: yarn test > OUT; sed -n 6,8p OUT > .github/workflows/COVERAGE_REPORT
+        run: yarn test > OUT; sed -n 6,40p OUT > .github/workflows/COVERAGE_REPORT
         env: 
           DATABASE_URL: postgresql://tests:tests@localhost:5432/tests
 
