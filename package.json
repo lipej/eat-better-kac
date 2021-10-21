@@ -9,7 +9,7 @@
     "test": "jest --coverage",
     "prod": "node dist/server/server.js --unhandled-rejections=strict",
     "dev": "ts-node -r tsconfig-paths/register src/main.ts",
-    "build": "esbuild src/main.ts --bundle --sourcemap --platform=node --outfile=dist/server/server.js",
+    "build": "npx esbuild src/main.ts --bundle --sourcemap --platform=node --outfile=dist/server/server.js",
     "start": "yarn build && yarn prod"
   },
   "repository": "git@github.com:fej0se/eat-better-kac.git",
@@ -41,7 +41,6 @@
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.1",
     "dotenv-cli": "^4.0.0",
-    "esbuild": "^0.13.8",
     "jest": "^27.3.0",
     "supertest": "^6.1.6",
     "ts-jest": "^27.0.7",
