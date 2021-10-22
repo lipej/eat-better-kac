@@ -1,16 +1,14 @@
-FROM node:lts AS base
-
-RUN npm config set cache /home/node/app/.npm-cache --global
+FROM node:lts-alpine
 
 WORKDIR /app
-COPY package*.json ./
+COPY package.json ./
+COPY yarn.lock ./
 COPY prisma ./prisma/
-ENV PATH /app/node_modules/.bin:$PATH
 
-RUN npm install
+RUN yarn install
 COPY . .
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["yarn", "start"]
