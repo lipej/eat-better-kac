@@ -6,7 +6,6 @@ import { listener } from '@app'
 
 const server = createServer({
   port: Config.server.port,
-  hostname: Config.server.host,
   listener
 })
 

@@ -4,13 +4,13 @@
   "description": "Project to study about Prima with Typescript base api and PostgreSQL",
   "main": "src/main.ts",
   "scripts": {
+    "heroku-postbuild": "yarn build && yarn prisma:init",
     "prisma:init": "npx prisma migrate dev --name init",
     "prisma:reset": "npx prisma migrate reset -f",
     "test": "jest --coverage",
-    "prod": "node dist/server/server.js --unhandled-rejections=strict",
     "dev": "ts-node -r tsconfig-paths/register src/main.ts",
-    "build": "npx esbuild src/main.ts --bundle --sourcemap --platform=node --outfile=dist/server/server.js",
-    "start": "yarn build && yarn prod"
+    "build": "esbuild src/main.ts --bundle --sourcemap --platform=node --outfile=dist/server/server.js",
+    "start": "node -r ./tsconfig-paths.js dist/server/server.js"
   },
   "repository": "git@github.com:fej0se/eat-better-kac.git",
   "author": "Felipe José <felipej0se@icloud.com>",
@@ -30,6 +30,7 @@
     "fp-ts": "^2.11.5",
     "jwt-decode": "^3.1.2",
     "prisma": "^3.2.1",
+    "tsconfig-paths": "^3.11.0",
     "rxjs": "^7.4.0"
   },
   "devDependencies": {
@@ -40,12 +41,11 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.1",
-    "dotenv-cli": "^4.0.0",
     "jest": "^27.3.0",
     "supertest": "^6.1.6",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.3.0",
-    "tsconfig-paths": "^3.11.0",
+    "esbuild": "^0.13.8",
     "typescript": "^4.4.4"
   }
 }
